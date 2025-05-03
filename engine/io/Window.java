@@ -9,6 +9,8 @@ public class Window {
     private long window;
     public int frames;
     public long time;
+    public Input input;
+
 
     public Window(int width, int height, String title) {
         this.width = width;
@@ -16,11 +18,15 @@ public class Window {
         this.title = title;
     }
 
+
     public void create() {
+        //Initialize
         if (!GLFW.glfwInit()){
             System.err.println("Error: GLFW wasn't initialized.");
             return;
         }
+
+        input = new Input();
 
         window = GLFW.glfwCreateWindow(width, height, title, 0, 0);
 
@@ -33,6 +39,13 @@ public class Window {
         GLFW.glfwSetWindowPos(window, (vidMode.width() - width) / 2, (vidMode.height() - height) / 2);
         GLFW.glfwMakeContextCurrent(window);
 
+
+        //Input
+        GLFW.glfwSetKeyCallback(window, input.getKeyboardCallback());
+        GLFW.glfwSetCursorPosCallback(window, input.getMouseMoveCallback());
+        GLFW.glfwSetMouseButtonCallback(window, input.getMouseButtonsCallback());
+
+
         GLFW.glfwShowWindow(window);
 
         GLFW.glfwSwapInterval(1);
@@ -40,10 +53,11 @@ public class Window {
         time = System.currentTimeMillis();
     }
 
+
     public void update() {
         GLFW.glfwPollEvents();
 
-        //check frames (print every second and reset the counter)
+        //Check frames (print every second and reset the counter)
         frames++;
         if (System.currentTimeMillis() > time + 1000){
             GLFW.glfwSetWindowTitle(window, title + " | FPS: " + frames);
@@ -52,11 +66,20 @@ public class Window {
         }
     }
 
+
     public void swapBuffers() {
         GLFW.glfwSwapBuffers(window);
     }
 
+
     public boolean shouldClose() {
         return GLFW.glfwWindowShouldClose(window);
+    }
+
+
+    public void destroy() {
+        input.destroy();
+        GLFW.glfwWindowShouldClose(window);
+        GLFW.glfwTerminate();
     }
 }

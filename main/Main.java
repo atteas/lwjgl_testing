@@ -1,11 +1,14 @@
 package main;
 
+import org.lwjgl.glfw.GLFW;
+
+import engine.io.Input;
 import engine.io.Window;
 
 public class Main implements Runnable {
     public Thread game;
-    public static Window window;
-    public static final int WIDTH = 800, HEIGHT = 500;
+    public Window window;
+    public final int WIDTH = 800, HEIGHT = 500;
 
     public void start(){
         game = new Thread(this, "game");
@@ -23,7 +26,9 @@ public class Main implements Runnable {
         while (!window.shouldClose()) {
             update();
             render();
+            if (Input.isKeyDown(GLFW.GLFW_KEY_ESCAPE)) return;
         }
+        window.destroy();
     }
 
     private void update(){
