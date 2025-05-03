@@ -2,13 +2,29 @@ package main;
 
 import org.lwjgl.glfw.GLFW;
 
+import engine.graphics.Mesh;
+import engine.graphics.Renderer;
+import engine.graphics.Vertex;
 import engine.io.Input;
 import engine.io.Window;
+import engine.maths.Vector3f;
 
 public class Main implements Runnable {
     public Thread game;
     public Window window;
-    public final int WIDTH = 800, HEIGHT = 500;
+    public Renderer renderer;
+    public final int WIDTH = 1400, HEIGHT = 800;
+
+    //mesh
+    public Mesh mesh = new Mesh(new Vertex[]{
+        new Vertex(new Vector3f(-0.5f, 0.5f, 0.0f)),
+        new Vertex(new Vector3f(0.5f, 0.5f, 0.0f)),
+        new Vertex(new Vector3f(0.5f, -0.5f, 0.0f)),
+        new Vertex(new Vector3f(-0.5f, -0.5f, 0.0f))
+    }, new int[]{
+        0, 1, 2,
+        0, 3, 2
+    });
 
     public void start(){
         game = new Thread(this, "game");
@@ -16,10 +32,12 @@ public class Main implements Runnable {
     }
 
     public void init(){
-        System.out.println(("Initializing game."));
         window = new Window(WIDTH, HEIGHT, "Monopoli");
+        renderer = new Renderer();
+
         window.setBackgroundColor(0.0f, 1.0f, 0.0f);
         window.create();
+        mesh.create();
     }
 
     //main loop
@@ -44,6 +62,7 @@ public class Main implements Runnable {
 
     //rendering
     private void render(){
+        renderer.renderMesh(mesh);
         window.swapBuffers();
     }
 

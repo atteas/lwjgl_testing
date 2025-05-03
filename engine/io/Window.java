@@ -6,6 +6,8 @@ import org.lwjgl.glfw.GLFWWindowSizeCallback;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
 
+import engine.maths.Vector3f;
+
 
 public class Window {
     private int width,  height;
@@ -14,7 +16,7 @@ public class Window {
     public int frames;
     public long time;
     public Input input;
-    private float backgroundR, backgroundG, backgroundB;
+    private Vector3f background = new Vector3f(0, 0, 0);
     private GLFWWindowSizeCallback sizeCallback;
     private boolean isResized;
     private boolean isFullscreen;
@@ -89,7 +91,7 @@ public class Window {
         }
 
         //Background color
-        GL11.glClearColor(backgroundR, backgroundG, backgroundB, 1.0f);
+        GL11.glClearColor(background.getX(), background.getY(), background.getZ(), 1.0f);
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
         //Process pending events
@@ -111,9 +113,7 @@ public class Window {
 
 
     public void setBackgroundColor(float r, float g, float b){
-        backgroundR = r;
-        backgroundG = g;
-        backgroundB = b;
+        background.set(r, g, b);
     }
 
 
