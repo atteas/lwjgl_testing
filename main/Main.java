@@ -2,12 +2,14 @@ package main;
 
 import org.lwjgl.glfw.GLFW;
 
+import engine.graphics.Material;
 import engine.graphics.Mesh;
 import engine.graphics.Renderer;
 import engine.graphics.Shader;
 import engine.graphics.Vertex;
 import engine.io.Input;
 import engine.io.Window;
+import engine.maths.Vector2f;
 import engine.maths.Vector3f;
 
 public class Main implements Runnable {
@@ -15,18 +17,18 @@ public class Main implements Runnable {
     public Window window;
     public Renderer renderer;
     public Shader shader;
-    public final int WIDTH = 1400, HEIGHT = 800;
+    public final int WIDTH = 1280, HEIGHT = 760;
 
     //mesh
     public Mesh mesh = new Mesh(new Vertex[]{
-        new Vertex(new Vector3f(-0.5f, 0.5f, 0.0f), new Vector3f(1.0f, 0.0f, 0.0f)),
-        new Vertex(new Vector3f(0.5f, 0.5f, 0.0f), new Vector3f(1.0f, 1.0f, 0.0f)),
-        new Vertex(new Vector3f(0.5f, -0.5f, 0.0f), new Vector3f(0.0f, 1.0f, 0.0f)),
-        new Vertex(new Vector3f(-0.5f, -0.5f, 0.0f), new Vector3f(0.0f, 0.0f, 1.0f))
+        new Vertex(new Vector3f(-0.5f, 0.5f, 0.0f), new Vector3f(1.0f, 0.0f, 0.0f), new Vector2f(0.0f, 0.0f)),
+        new Vertex(new Vector3f(-0.5f, -0.5f, 0.0f), new Vector3f(0.0f, 1.0f, 0.0f), new Vector2f(0.0f, 1.0f)),
+        new Vertex(new Vector3f(0.5f, -0.5f, 0.0f), new Vector3f(0.0f, 0.0f, 1.0f), new Vector2f(1.0f, 1.0f)),
+        new Vertex(new Vector3f(0.5f, 0.5f, 0.0f), new Vector3f(1.0f, 1.0f, 0.0f), new Vector2f(1.0f, 0.0f))
     }, new int[]{
         0, 1, 2,
         0, 3, 2
-    });
+    }, new Material("resources/textures/StandingGuy.png"));
 
     public void start(){
         game = new Thread(this, "game");
