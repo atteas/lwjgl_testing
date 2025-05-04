@@ -19,10 +19,10 @@ public class Main implements Runnable {
 
     //mesh
     public Mesh mesh = new Mesh(new Vertex[]{
-        new Vertex(new Vector3f(-0.5f, 0.5f, 0.0f)),
-        new Vertex(new Vector3f(0.5f, 0.5f, 0.0f)),
-        new Vertex(new Vector3f(0.5f, -0.5f, 0.0f)),
-        new Vertex(new Vector3f(-0.5f, -0.5f, 0.0f))
+        new Vertex(new Vector3f(-0.5f, 0.5f, 0.0f), new Vector3f(1.0f, 0.0f, 0.0f)),
+        new Vertex(new Vector3f(0.5f, 0.5f, 0.0f), new Vector3f(1.0f, 1.0f, 0.0f)),
+        new Vertex(new Vector3f(0.5f, -0.5f, 0.0f), new Vector3f(0.0f, 1.0f, 0.0f)),
+        new Vertex(new Vector3f(-0.5f, -0.5f, 0.0f), new Vector3f(0.0f, 0.0f, 1.0f))
     }, new int[]{
         0, 1, 2,
         0, 3, 2
@@ -38,7 +38,7 @@ public class Main implements Runnable {
         shader = new Shader("resources/shaders/mainVertex.glsl", "resources/shaders/mainFragment.glsl");
         renderer = new Renderer(shader);
 
-        window.setBackgroundColor(0.0f, 1.0f, 0.0f);
+        window.setBackgroundColor(0.0f, 0.0f, 0.0f);
         window.create();
         mesh.create();
         shader.create();
@@ -52,7 +52,7 @@ public class Main implements Runnable {
             render();
             if (Input.isKeyDown(GLFW.GLFW_KEY_F11)) window.setFullscreen(!window.isFullscreen());
         }
-        window.destroy();
+        close();
     }
 
     //updating
@@ -68,6 +68,14 @@ public class Main implements Runnable {
     private void render(){
         renderer.renderMesh(mesh);
         window.swapBuffers();
+    }
+
+
+    //closing
+    private void close(){
+        window.destroy();
+        mesh.destroy();
+        shader.destroy();
     }
 
     public static void main(String[] args){
