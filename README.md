@@ -1,4 +1,4 @@
-<h1 align="center"> L W J G L  t e s t i n g </h1>
+<h1 align="center"> L W J G L&nbsp;&nbsp;t e s t i n g </h1>
 <div align="center">
     <img src="readmeImages/lwjgl.png" alt="LWJGL image">
 </div>
