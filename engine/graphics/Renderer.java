@@ -7,12 +7,14 @@ import org.lwjgl.opengl.GL30;
 
 public class Renderer {
     private Shader shader;
+    private double temp;
 
     public Renderer(Shader shader){
         this.shader = shader;
     }
 
     public void renderMesh(Mesh mesh){
+        temp += 0.02;
         GL30.glBindVertexArray(mesh.getVAO());
         GL30.glEnableVertexAttribArray(0);
         GL30.glEnableVertexAttribArray(1);
@@ -24,6 +26,7 @@ public class Renderer {
         GL13.glBindTexture(GL11.GL_TEXTURE_2D, mesh.getMaterial().getTextureID());
         
         shader.bind();
+        shader.setUniform("scale", (float) Math.sin(temp));
         GL11.glDrawElements(GL11.GL_TRIANGLES, mesh.getIndices().length, GL11.GL_UNSIGNED_INT, 0);
         shader.unbind();
 
