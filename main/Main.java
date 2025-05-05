@@ -11,6 +11,7 @@ import engine.io.Input;
 import engine.io.Window;
 import engine.maths.Vector2f;
 import engine.maths.Vector3f;
+import engine.objects.GameObject;
 
 public class Main implements Runnable {
     public Thread game;
@@ -29,6 +30,8 @@ public class Main implements Runnable {
         0, 1, 2,
         0, 3, 2
     }, new Material("resources/textures/StandingGuy.png"));
+
+    public GameObject object = new GameObject(new Vector3f(0, 0, 0), new Vector3f(0, 0, 0), new Vector3f(1, 1, 1), mesh);
 
     public void start(){
         game = new Thread(this, "game");
@@ -60,6 +63,7 @@ public class Main implements Runnable {
     //updating
     private void update(){
         window.update();
+        object.update();
         if (Input.isButtonDown(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
             System.out.println("X: " + Input.getMouseX() + ", Y: " + Input.getMouseY());
         }
@@ -68,7 +72,7 @@ public class Main implements Runnable {
 
     //rendering
     private void render(){
-        renderer.renderMesh(mesh);
+        renderer.renderMesh(object);
         window.swapBuffers();
     }
 
