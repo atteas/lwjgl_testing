@@ -43,7 +43,7 @@ public class Main implements Runnable {
         shader = new Shader("resources/shaders/mainVertex.glsl", "resources/shaders/mainFragment.glsl");
         renderer = new Renderer(shader);
 
-        window.setBackgroundColor(0.0f, 0.0f, 0.0f);
+        window.setBackgroundColor(0.2f, 0.5f, 0.0f);
         window.create();
         mesh.create();
         shader.create();

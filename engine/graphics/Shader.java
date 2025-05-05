@@ -23,19 +23,20 @@ public class Shader {
     public void create(){
         programID = GL20.glCreateProgram();
         vertexID = GL20.glCreateShader(GL20.GL_VERTEX_SHADER);
-        fragmentID = GL20.glCreateShader(GL20.GL_FRAGMENT_SHADER);
 
         GL20.glShaderSource(vertexID, vertexFile);
         GL20.glCompileShader(vertexID);
 
-        GL20.glShaderSource(fragmentID, fragmentFile);
-        GL20.glCompileShader(fragmentID);
-
-        //error check
         if (GL20.glGetShaderi(vertexID, GL20.GL_COMPILE_STATUS) == GL11.GL_FALSE){
             System.err.println("Vertex shader: " + GL20.glGetShaderInfoLog(vertexID));
             return;
         }
+
+        fragmentID = GL20.glCreateShader(GL20.GL_FRAGMENT_SHADER);
+
+        GL20.glShaderSource(fragmentID, fragmentFile);
+        GL20.glCompileShader(fragmentID);
+
         if (GL20.glGetShaderi(fragmentID, GL20.GL_COMPILE_STATUS) == GL11.GL_FALSE){
             System.err.println("Fragment shader: " + GL20.glGetShaderInfoLog(fragmentID));
             return;
