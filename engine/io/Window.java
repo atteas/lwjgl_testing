@@ -14,14 +14,13 @@ public class Window {
     private String title;
     private long window;
     public int frames;
-    public long time;
+    public static long time;
     public Input input;
     private Vector3f background = new Vector3f(0, 0, 0);
     private GLFWWindowSizeCallback sizeCallback;
     private boolean isResized;
     private boolean isFullscreen;
-    private int[] windowPosX = new int[1];
-    private int[] windowPosY  = new int[1];
+    private int[] windowPosX = new int[1], windowPosY  = new int[1];
 
 
     public Window(int width, int height, String title) {

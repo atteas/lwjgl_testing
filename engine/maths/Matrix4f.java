@@ -2,7 +2,7 @@ package engine.maths;
 
 public class Matrix4f {
     public static final int SIZE = 4;
-    private float[] elements = new float[SIZE *SIZE];
+    private float[] elements = new float[SIZE * SIZE];
 
     public static Matrix4f identity(){
         Matrix4f result = new Matrix4f();
