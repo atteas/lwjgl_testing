@@ -7,7 +7,7 @@ import engine.maths.Vector3f;
 
 public class Camera {
     private Vector3f position, rotation;
-    private float moveSpeed = 0.05f;
+    private float moveSpeed = 0.01f;
     private float mouseSensitivity = 0.2f;
     private double oldMouseX = 0, oldMouseY = 0, newMouseX, newMouseY;
 

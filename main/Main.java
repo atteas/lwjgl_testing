@@ -60,7 +60,7 @@ public class Main implements Runnable {
 			new Vertex(new Vector3f( 0.5f, -0.5f,  0.5f), new Vector2f(1.0f, 0.0f)),
 	}, new int[] {
 			//Back face
-			0, 1, 3,	
+			0, 1, 3,
 			3, 1, 2,	
 			
 			//Front face
@@ -82,7 +82,7 @@ public class Main implements Runnable {
 			//Bottom face
 			20, 21, 23,
 			23, 21, 22
-	}, new Material("resources/textures/StandingGuy.png"));
+	}, new Material("resources/textures/monopoly.png"));
 
     public GameObject object = new GameObject(new Vector3f(0, 0, 0), new Vector3f(0, 0, 0), new Vector3f(1, 1, 1), mesh);
 
@@ -94,7 +94,7 @@ public class Main implements Runnable {
     }
 
     public void init(){
-        window = new Window(WIDTH, HEIGHT, "Test");
+        window = new Window(WIDTH, HEIGHT, "Monopoli");
         shader = new Shader("resources/shaders/mainVertex.glsl", "resources/shaders/mainFragment.glsl");
         renderer = new Renderer(window, shader);
 

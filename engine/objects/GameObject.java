@@ -14,10 +14,6 @@ public class GameObject {
         this.mesh = mesh;
     }
 
-    public void update(){
-        position.setZ(position.getZ() - 0.05f);
-    }
-
     //getters
     public Vector3f getPosition() {
         return position;

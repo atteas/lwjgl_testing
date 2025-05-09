@@ -45,8 +45,8 @@ public class Mesh {
         FloatBuffer textureBuffer = MemoryUtil.memAllocFloat(vertices.length * 2);
         float[] textureData = new float[vertices.length * 2];
         for (int i = 0; i < vertices.length; i++){
-            textureData[i * 2] = vertices[i].getTextureCoord().getX();
-            textureData[i * 2 + 1] = vertices[i].getTextureCoord().getY();
+            textureData[i * 2] = vertices[i].getTextureCoord().getX() * material.getWidth();
+            textureData[i * 2 + 1] = vertices[i].getTextureCoord().getY() * material.getHeight();
         }
         textureBuffer.put(textureData).flip();
 
