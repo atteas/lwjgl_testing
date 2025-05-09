@@ -13,7 +13,7 @@ public class Mesh {
     private Vertex[] vertices;
     private int[] indices;
     private Material material;
-    private int vao, pbo, ibo, cbo, tbo;
+    private int vao, pbo, ibo, tbo;
 
     public Mesh(Vertex[] vertices, int[] indices, Material material){
         this.vertices = vertices;
@@ -39,19 +39,6 @@ public class Mesh {
         positionBuffer.put(positionData).flip();
 
         pbo = storeData(positionBuffer, 0, 3);
-
-
-        //colorBuffer
-        FloatBuffer colorBuffer = MemoryUtil.memAllocFloat(vertices.length * 3);
-        float[] colorData = new float[vertices.length * 3];
-        for (int i = 0; i < vertices.length; i++){
-            colorData[i * 3] = vertices[i].getColor().getX();
-            colorData[i * 3 + 1] = vertices[i].getColor().getY();
-            colorData[i * 3 + 2] = vertices[i].getColor().getZ();
-        }
-        colorBuffer.put(colorData).flip();
-
-        cbo = storeData(colorBuffer, 1, 3);
 
 
         //textureBuffer
@@ -87,7 +74,7 @@ public class Mesh {
     };
 
     public void destroy(){
-        GL15.glDeleteBuffers(new int[]{pbo, cbo, ibo, tbo});
+        GL15.glDeleteBuffers(new int[]{pbo, ibo, tbo});
         GL30.glDeleteVertexArrays(vao);
         material.destroy();
     }
@@ -102,10 +89,7 @@ public class Mesh {
     public int getIBO() {
         return ibo;
     }
-    public int getCBO() {
-        return cbo;
-    }
-    public int getTbo() {
+    public int getTBO() {
         return tbo;
     }
 

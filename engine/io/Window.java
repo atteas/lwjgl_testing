@@ -109,6 +109,23 @@ public class Window {
     }
 
 
+    public void setFullscreen(boolean isFullscreen) {
+        this.isFullscreen = isFullscreen;
+        isResized = true;
+        if (isFullscreen){
+            GLFW.glfwGetWindowPos(window, windowPosX, windowPosY);
+            GLFW.glfwSetWindowMonitor(window, GLFW.glfwGetPrimaryMonitor(), 0, 0, width, height, 0);
+        } else {
+            GLFW.glfwSetWindowMonitor(window, 0, windowPosX[0], windowPosY[0], width, height, 0);
+        }
+    }
+
+
+    public void mouseState(boolean lock){
+        GLFW.glfwSetInputMode(window, GLFW.GLFW_CURSOR, lock ? GLFW.GLFW_CURSOR_DISABLED : GLFW.GLFW_CURSOR_NORMAL);
+    }
+
+
     public void swapBuffers() {
         GLFW.glfwSwapBuffers(window);
     }
@@ -155,17 +172,5 @@ public class Window {
 
     public boolean isFullscreen() {
         return isFullscreen;
-    }
-
-
-    public void setFullscreen(boolean isFullscreen) {
-        this.isFullscreen = isFullscreen;
-        isResized = true;
-        if (isFullscreen){
-            GLFW.glfwGetWindowPos(window, windowPosX, windowPosY);
-            GLFW.glfwSetWindowMonitor(window, GLFW.glfwGetPrimaryMonitor(), 0, 0, width, height, 0);
-        } else {
-            GLFW.glfwSetWindowMonitor(window, 0, windowPosX[0], windowPosY[0], width, height, 0);
-        }
     }
 }
