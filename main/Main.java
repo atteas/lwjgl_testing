@@ -2,14 +2,12 @@ package main;
 
 import org.lwjgl.glfw.GLFW;
 
-import engine.graphics.Material;
 import engine.graphics.Mesh;
 import engine.graphics.Renderer;
 import engine.graphics.Shader;
-import engine.graphics.Vertex;
 import engine.io.Input;
+import engine.io.ModelLoader;
 import engine.io.Window;
-import engine.maths.Vector2f;
 import engine.maths.Vector3f;
 import engine.objects.Camera;
 import engine.objects.GameObject;
@@ -22,69 +20,7 @@ public class Main implements Runnable {
     public final int WIDTH = 1280, HEIGHT = 760;
 
     //mesh
-    public Mesh mesh = new Mesh(new Vertex[] {
-			//Back face
-			new Vertex(new Vector3f(-0.5f,  0.5f, -0.5f), new Vector2f(0.0f, 0.0f)),
-			new Vertex(new Vector3f(-0.5f, -0.5f, -0.5f), new Vector2f(0.0f, 1.0f)),
-			new Vertex(new Vector3f( 0.5f, -0.5f, -0.5f), new Vector2f(1.0f, 1.0f)),
-			new Vertex(new Vector3f( 0.5f,  0.5f, -0.5f), new Vector2f(1.0f, 0.0f)),
-			
-			//Front face
-			new Vertex(new Vector3f(-0.5f,  0.5f,  0.5f), new Vector2f(0.0f, 0.0f)),
-			new Vertex(new Vector3f(-0.5f, -0.5f,  0.5f), new Vector2f(0.0f, 1.0f)),
-			new Vertex(new Vector3f( 0.5f, -0.5f,  0.5f), new Vector2f(1.0f, 1.0f)),
-			new Vertex(new Vector3f( 0.5f,  0.5f,  0.5f), new Vector2f(1.0f, 0.0f)),
-			
-			//Right face
-			new Vertex(new Vector3f( 0.5f,  0.5f, -0.5f), new Vector2f(0.0f, 0.0f)),
-			new Vertex(new Vector3f( 0.5f, -0.5f, -0.5f), new Vector2f(0.0f, 1.0f)),
-			new Vertex(new Vector3f( 0.5f, -0.5f,  0.5f), new Vector2f(1.0f, 1.0f)),
-			new Vertex(new Vector3f( 0.5f,  0.5f,  0.5f), new Vector2f(1.0f, 0.0f)),
-			
-			//Left face
-			new Vertex(new Vector3f(-0.5f,  0.5f, -0.5f), new Vector2f(0.0f, 0.0f)),
-			new Vertex(new Vector3f(-0.5f, -0.5f, -0.5f), new Vector2f(0.0f, 1.0f)),
-			new Vertex(new Vector3f(-0.5f, -0.5f,  0.5f), new Vector2f(1.0f, 1.0f)),
-			new Vertex(new Vector3f(-0.5f,  0.5f,  0.5f), new Vector2f(1.0f, 0.0f)),
-			
-			//Top face
-			new Vertex(new Vector3f(-0.5f,  0.5f,  0.5f), new Vector2f(0.0f, 0.0f)),
-			new Vertex(new Vector3f(-0.5f,  0.5f, -0.5f), new Vector2f(0.0f, 1.0f)),
-			new Vertex(new Vector3f( 0.5f,  0.5f, -0.5f), new Vector2f(1.0f, 1.0f)),
-			new Vertex(new Vector3f( 0.5f,  0.5f,  0.5f), new Vector2f(1.0f, 0.0f)),
-			
-			//Bottom face
-			new Vertex(new Vector3f(-0.5f, -0.5f,  0.5f), new Vector2f(0.0f, 0.0f)),
-			new Vertex(new Vector3f(-0.5f, -0.5f, -0.5f), new Vector2f(0.0f, 1.0f)),
-			new Vertex(new Vector3f( 0.5f, -0.5f, -0.5f), new Vector2f(1.0f, 1.0f)),
-			new Vertex(new Vector3f( 0.5f, -0.5f,  0.5f), new Vector2f(1.0f, 0.0f)),
-	}, new int[] {
-			//Back face
-			0, 1, 3,
-			3, 1, 2,	
-			
-			//Front face
-			4, 5, 7,
-			7, 5, 6,
-			
-			//Right face
-			8, 9, 11,
-			11, 9, 10,
-			
-			//Left face
-			12, 13, 15,
-			15, 13, 14,
-			
-			//Top face
-			16, 17, 19,
-			19, 17, 18,
-			
-			//Bottom face
-			20, 21, 23,
-			23, 21, 22
-	}, new Material("resources/textures/StandingGuy.png"));
-
-    public GameObject[] objects = new GameObject[500];
+    public Mesh mesh = ModelLoader.loadModel("src/resources/models/dragon.obj", "resources/textures/StandingGuy.png");
 
     public GameObject object = new GameObject(new Vector3f(0, 0, 0), new Vector3f(0, 0, 0), new Vector3f(1, 1, 1), mesh);
 
@@ -104,11 +40,6 @@ public class Main implements Runnable {
         window.create();
         mesh.create();
         shader.create();
-
-        objects[0] = object;
-        for (int i = 1; i < objects.length; i++){
-            objects[i] = new GameObject(new Vector3f((float) (Math.random() * 50 - 25), (float) (Math.random() * 50 - 25), (float) (Math.random() * 50 - 25)), new Vector3f(0, 0, 0), new Vector3f(1, 1, 1), mesh);
-        }
     }
 
     //main loop
@@ -133,9 +64,6 @@ public class Main implements Runnable {
 
     //rendering
     private void render(){
-        for (int i = 1; i < objects.length; i++){
-            renderer.renderMesh(objects[i], camera);
-        }
         renderer.renderMesh(object, camera);
         window.swapBuffers();
     }
