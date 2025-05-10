@@ -82,7 +82,9 @@ public class Main implements Runnable {
 			//Bottom face
 			20, 21, 23,
 			23, 21, 22
-	}, new Material("resources/textures/monopoly.png"));
+	}, new Material("resources/textures/StandingGuy.png"));
+
+    public GameObject[] objects = new GameObject[500];
 
     public GameObject object = new GameObject(new Vector3f(0, 0, 0), new Vector3f(0, 0, 0), new Vector3f(1, 1, 1), mesh);
 
@@ -102,6 +104,11 @@ public class Main implements Runnable {
         window.create();
         mesh.create();
         shader.create();
+
+        objects[0] = object;
+        for (int i = 1; i < objects.length; i++){
+            objects[i] = new GameObject(new Vector3f((float) (Math.random() * 50 - 25), (float) (Math.random() * 50 - 25), (float) (Math.random() * 50 - 25)), new Vector3f(0, 0, 0), new Vector3f(1, 1, 1), mesh);
+        }
     }
 
     //main loop
@@ -119,12 +126,16 @@ public class Main implements Runnable {
     //updating
     private void update(){
         window.update();
-        camera.update();
+        //camera.update(); //first person
+        camera.update(object); //3rd person (center to an object)
     }
 
 
     //rendering
     private void render(){
+        for (int i = 1; i < objects.length; i++){
+            renderer.renderMesh(objects[i], camera);
+        }
         renderer.renderMesh(object, camera);
         window.swapBuffers();
     }
